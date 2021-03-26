@@ -3,4 +3,6 @@
 * 杂谈
   * [人之初](helloword.md)
 * JVM
-  * [人之初](helloword.md)
+  * [虚拟机](JVM.md)
+* JVM
+  * [算法与数据结构](algorithm.md)
