@@ -1,5 +1,11 @@
 ```
 网络到分布式
+    * 几条命令
+    查看路由表： route -n
+    arp协议查看MAC地址：arp -a
+    查看本机IP地址：ipconfig
+    查看网络连接：netstat -natp
+    指令重定向到文件：echo 1 > arp_ignore  
 ```
 # 计算机的四个维度
     * IP地址 如：192.168.1.13
@@ -43,6 +49,44 @@
 ```
 
  ## 通讯模型推导 LVS
- ### DR模型
- ### TUN模型
- ### NAT模型
+ ### DR模型 
+    (cip-vip)                 (隐藏vip) (vip-cip)
+        ((cip-vip)@rip的MAC地址) 
+    (cip-vip)                 (隐藏vip) (vip-cip)
+    
+    优点
+        基于二层MAC地址欺骗 速度快，成本低
+        lvs不会成为瓶颈
+    缺点
+        rs和负载均衡服务器必须在同一网段（同一局域网）
+    要求
+        后端真实服务器rs直接响应客服端，不安全
+        
+ ### TUN模型 - 隧道模型
+    (cip-vip)                 (隐藏vip) (vip-cip)
+        (vip-rip(cip-vip)) 
+    (cip-vip)                 (隐藏vip) (vip-cip)
+    
+    优点 
+        速度快 lvs不会成为瓶颈
+    缺点
+        不安全 不能抵抗dos攻击
+    要求
+        负载均衡服务器lvs 和后端真实服务器rs都有vip
+        请求报文不能太大
+ ### NAT模型  cip-vip-dip-rip-dip-vip-cip
+    (cip-vip)                         (rip-dip)
+        (cip-vip) (vip-dip) (dip-rip) 
+    (cip-vip)                         (rip-dip)
+    
+    优点 
+        安全
+        可以实现不同网段的数据请求
+    缺点
+        带宽成为瓶颈，消耗算力，非对称
+        单点故障
+    要求
+        rs的gw指向负载均衡服务器
+        lvs有不同的网段
+        后端真实服务器rs的网关gw必须设置lvs的IP地址
+
