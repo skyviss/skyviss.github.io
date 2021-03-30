@@ -26,8 +26,16 @@
     * 物理层
 # 五层网络
     * 应用层
+      http协议  协议：规范与标准
+      ssh协议
     * 传输协议层
+       三次握手
+       数据传输     最小粒度
+       四次挥手
     * 网络层
+       查找下一跳     route -n
+                    路由判定-按位与
+                    MAC地址          IP地址的端到端的-MAC地址是节点间的
     * 链路层
     * 物理层
 # 网络连接基石 - 三次握手、四次挥手
@@ -47,6 +55,40 @@
         交换机01  路由器  交换机02
 计算机02                         计算机12
 ```
+
+ ## rs隐藏vip
+  ### 修改协议
+    cd /proc/sys/net/ipv4/conf/eth0
+    echo 1 > arp_ignore
+    echo 2 > arp_announce
+    cd /proc/sys/net/ipv4/conf/all
+    echo 1 > arp_ignore
+    echo 2 > arp_announce
+  ### 新增环形IP lo
+    ifconfig lo:3 192.168.110.80 netmask 255.255.255.255
+## lvs暴露的vip
+  ### 新增以太网IP eth0
+    ifconfig eth0:1 192.168.110.90 netmask 255.255.255.0
+    或者
+    ifconfig eth0:1 192.168.110.90/24
+  ### 删除ip
+    ip addr del 192.168.110.90 dev eth0
+    
+ ## 调度算法
+  ### 静态
+    rr 轮询
+    wrr 加权轮询
+    dh 目标地址散列调度
+    sh 源地址散列调度
+  ### 动态
+    lc 最少连接
+    wic 加权最少连接
+    sed 最短期望延迟
+    nq never queue
+    dblc 基于本地最少连接
+    DH 目标地址散列调度
+    LBLCR 基于本地的带复制功能的最少连接
+
 
  ## 通讯模型推导 LVS
  ### DR模型 
