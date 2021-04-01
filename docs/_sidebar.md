@@ -6,6 +6,8 @@
   * [分布式](network.md)
 * 多线程并发编程
   * [多线程相关](multiThread.md)
+* 设计模式
+  * [23种设计模式](designPattern.md)
 * JVM
   * [虚拟机](JVM.md)
 * 算法
