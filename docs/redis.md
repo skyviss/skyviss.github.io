@@ -59,3 +59,34 @@
 ## 5.5 AIO模型
 ``` 
 ```
+
+
+
+
+# 6 docker redis
+```
+
+第一步: Launch RedisBloom with Docker 
+    # docker run -p 6380:6380 --name redis-redisbloom redislabs/rebloom:latest
+第二步: Use RedisBloom withredis-cli 
+    # docker exec -it redis-redisbloom bash 
+    # redis-cli 
+    # 127.0.0.1:6379>
+第三步: Start a new bloom filter by adding a new item 
+    # 127.0.0.1:6379> BF.ADD newFilter foo 
+    (integer) 1
+第四步: Checking if an item exists in the filter 
+    # 127.0.0.1:6379> BF.EXISTS newFilter foo 
+    (integer) 1
+第五步: 配置密码或其它相关设置 ...... 
+    # 127.0.0.1:6379> config set requirepass xxxxx 
+    OK 
+    # 127.0.0.1:6379> config set notify-keyspace-events xE 
+    (error) NOAUTH Authentication required. 
+    # 127.0.0.1:6379> auth xxxxx 
+    OK 
+    # 127.0.0.1:6379> config set notify-keyspace-events xE 
+    OK 
+    # 127.0.0.1:6379>
+```
+
