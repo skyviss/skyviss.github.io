@@ -18,3 +18,6 @@
   * [浅谈kafka](kafka.md)
 * mysql
   * [浅谈mysql](mysql.md)
+* Linux操作系统
+  * [liunx操作系统前言](linux_preface.md)
+  * [浅谈liunx操作系统](linux.md)
